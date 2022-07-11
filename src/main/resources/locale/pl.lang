@@ -1,0 +1,9 @@
+[object]
+enchantmenttable=Tabela zaklęć
+
+[item]
+enchantmentorb=Zaklęty orb
+enchantmentshard=Odłamek zaklęcia
+
+[itemtooltip]
+enchantmenttabletip=może być umieszczony

@@ -1,19 +1,9 @@
-[tile]
-exampletile=Example Tile
-
 [object]
-exampleobject=Example Object
+enchantmenttable=Enchantment Table
 
 [item]
-exampleitem=Example Item
-examplesword=Example Sword
-examplestaff=Example Staff
+enchantmentorb=Enchantment Orb
+enchantmentshard=Enchantment Shard
 
 [itemtooltip]
-examplestafftip=Shoots a homing, piercing projectile
-
-[mob]
-examplemob=Example Mob
-
-[buff]
-examplebuff=Example Buff
+enchantmenttabletip=Can be placed

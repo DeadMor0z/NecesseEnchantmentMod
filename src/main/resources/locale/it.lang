@@ -1,0 +1,9 @@
+[object]
+enchantmenttable=Tavola dell'incanto
+
+[item]
+enchantmentorb=Orbita dell'incanto
+enchantmentshard=Frammento d'incanto
+
+[itemtooltip]
+enchantmenttabletip=Può essere posizionato

@@ -1,0 +1,9 @@
+[object]
+enchantmenttable=Table d'enchantement
+
+[item]
+enchantmentorb=Orb d'enchantement
+enchantmentshard=Eclat d'enchantement
+
+[itemtooltip]
+enchantmenttabletip=Peut être placé

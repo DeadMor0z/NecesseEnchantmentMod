@@ -1,0 +1,9 @@
+[object]
+enchantmenttable=Verzauberungstisch
+
+[item]
+enchantmentorb=Verzauberungsorb
+enchantmentshard=Verzauberungsscherbe
+
+[itemtooltip]
+enchantmenttabletip=Kann platziert werden

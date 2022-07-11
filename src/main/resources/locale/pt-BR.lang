@@ -1,0 +1,9 @@
+[object]
+enchantmenttable=Tabela de Encantamento
+
+[item]
+enchantmentorb=Orbe de Encantamento
+enchantmentshard=Pedaço de Encantamento
+
+[itemtooltip]
+enchantmenttabletip=Pode ser colocado

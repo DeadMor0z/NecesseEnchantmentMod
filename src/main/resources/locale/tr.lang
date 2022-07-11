@@ -1,0 +1,9 @@
+[object]
+enchantmenttable=Büyü Tablosu
+
+[item]
+enchantmentorb=Büyü Küresi
+enchantmentshard=Büyü Parçası
+
+[itemtooltip]
+enchantmenttabletip=yerleştirilebilir

@@ -1,0 +1,9 @@
+[object]
+enchantmenttable=エンチャントテーブル
+
+[item]
+enchantmentorb=エンチャントオーブ
+enchantmentshard=エンチャントシャード
+
+[itemtooltip]
+enchantmenttabletip=置ける

@@ -1,0 +1,9 @@
+[object]
+enchantmenttable=Таблица очарования
+
+[item]
+enchantmentorb=Шар зачарования
+enchantmentshard=Осколок зачарования
+
+[itemtooltip]
+enchantmenttabletip=Может быть размещен
