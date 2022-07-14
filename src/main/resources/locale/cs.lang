@@ -4,6 +4,8 @@ enchantmenttable=Okouzlující tabulka
 [item]
 enchantmentorb=Okouzlující koule
 enchantmentshard=Okouzlující střep
+luckybox=Šťastná krabička
+shardpouch=Pouzdro na střepy
 
 [itemtooltip]
 enchantmenttabletip=Lze umístit

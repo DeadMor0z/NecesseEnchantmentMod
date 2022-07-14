@@ -4,6 +4,8 @@ enchantmenttable=Tabela zaklęć
 [item]
 enchantmentorb=Zaklęty orb
 enchantmentshard=Odłamek zaklęcia
+luckybox=Lucky Box
+shardpouch=Torba Shard
 
 [itemtooltip]
 enchantmenttabletip=może być umieszczony

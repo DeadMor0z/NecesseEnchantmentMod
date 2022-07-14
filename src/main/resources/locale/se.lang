@@ -4,6 +4,8 @@ enchantmenttable=Förtrollningstabell
 [item]
 enchantmentorb=Förtrollning Orb
 enchantmentshard=Förtrollningsskärva
+luckybox=Lucky Box
+shardpouch=Skärvningsväska
 
 [itemtooltip]
 enchantmenttabletip=Kan placeras

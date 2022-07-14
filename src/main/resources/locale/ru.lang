@@ -4,6 +4,8 @@ enchantmenttable=Таблица очарования
 [item]
 enchantmentorb=Шар зачарования
 enchantmentshard=Осколок зачарования
+luckybox=Счастливый ящик
+shardpouch=Мешок с осколками
 
 [itemtooltip]
 enchantmenttabletip=Может быть размещен

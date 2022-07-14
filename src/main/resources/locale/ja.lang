@@ -4,6 +4,8 @@ enchantmenttable=エンチャントテーブル
 [item]
 enchantmentorb=エンチャントオーブ
 enchantmentshard=エンチャントシャード
+luckybox=ラッキーボックス
+shardpouch=シャードバッグ
 
 [itemtooltip]
 enchantmenttabletip=置ける

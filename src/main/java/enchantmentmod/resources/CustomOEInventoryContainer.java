@@ -38,6 +38,13 @@ public class CustomOEInventoryContainer extends OEInventoryContainer {
             if (client.getServerClient().achievementsLoaded()) {
                 client.getServerClient().achievements().ENCHANT_ITEM.markCompleted(client.getServerClient());
             }
+            client.playerMob.getInv().main.removeItems(
+                client.playerMob.getLevel(),
+                client.playerMob,
+                ItemRegistry.getItem("enchantmentorb"),
+                enchantCost,
+                "buy"
+            );
             Packet itemContent = InventoryItem.getContentPacket(ivItemCandidate);
             CustomOEInventoryContainer.this.enchantButtonResponse.runAndSend(itemContent);
         }
@@ -51,13 +58,6 @@ public class CustomOEInventoryContainer extends OEInventoryContainer {
             Screen.playSound(GameResources.pop, SoundEffect.effect(client.playerMob));
             InventoryItem enchantedItem = InventoryItem.fromContentPacket(content);
             client.playerMob.getLevel().hudManager.addElement(new ItemPickupText(client.playerMob, enchantedItem));
-            client.playerMob.getInv().main.removeItems(
-                client.playerMob.getLevel(),
-                client.playerMob,
-                ItemRegistry.getItem("enchantmentorb"),
-                enchantCost,
-                "buy"
-            );
         }
     });
 
@@ -65,7 +65,6 @@ public class CustomOEInventoryContainer extends OEInventoryContainer {
         super(client, uniqueSeed, oeInventory, reader);
     }
     public int getEnchantCost() {
-
         return this.canEnchant() ? enchantCost : 0;
     }
 

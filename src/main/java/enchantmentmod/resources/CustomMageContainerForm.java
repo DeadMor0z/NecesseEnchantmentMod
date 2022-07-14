@@ -21,11 +21,10 @@ import necesse.gfx.forms.components.localComponents.FormLocalTextButton;
 import necesse.gfx.forms.presets.containerComponent.mob.ShopContainerForm;
 import necesse.gfx.gameFont.FontOptions;
 import necesse.gfx.ui.ButtonColor;
-import necesse.inventory.container.mob.MageContainer;
 
 import java.awt.*;
 
-public class CustomMageContainerForm<T extends MageContainer> extends ShopContainerForm<T> {
+public class CustomMageContainerForm<T extends CustomMageContainer> extends ShopContainerForm<T> {
     public Form enchantForm;
     public FormLabel costText;
     public FormLocalTextButton enchantButton;
@@ -37,7 +36,7 @@ public class CustomMageContainerForm<T extends MageContainer> extends ShopContai
 
         this.enchantForm = this.addComponent(
             new Form("enchant", width, height), (form, active) -> {
-                ((CustomMageContainer)container).setIsEnchanting.runAndSend(active);
+                //((CustomMageContainer)container).setIsEnchanting.runAndSend(active);
                 container.setIsEnchanting.runAndSend(active);
             }
         );
@@ -94,9 +93,7 @@ public class CustomMageContainerForm<T extends MageContainer> extends ShopContai
         );
 
         this.enchantButton.onClicked((e) -> {
-            ((CustomMageContainer)container).copyInventory.runAndSend();
             container.enchantButton.runAndSend();
-            ((CustomMageContainer)container).enchantButton.runAndSend();
         });
 
         this.costLabel = this.enchantForm.addComponent(
@@ -158,7 +155,7 @@ public class CustomMageContainerForm<T extends MageContainer> extends ShopContai
 
     private void updateEnchantActive() {
         this.costText.setText("x " + (this.container).getEnchantCost());
-        this.enchantButton.setActive(((CustomMageContainer)this.container).canEnchant());
+        this.enchantButton.setActive((this.container).canEnchant());
     }
 
     public void draw(TickManager tickManager, PlayerMob perspective, Rectangle renderBox) {

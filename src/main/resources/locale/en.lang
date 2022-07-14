@@ -4,6 +4,9 @@ enchantmenttable=Enchantment Table
 [item]
 enchantmentorb=Enchantment Orb
 enchantmentshard=Enchantment Shard
+shardpouch=Shard Pouch
+luckybox=Lucky Box
 
 [itemtooltip]
 enchantmenttabletip=Can be placed
+shardpouchstored=Shards: <shards>

@@ -4,6 +4,8 @@ enchantmenttable=인챈트 테이블
 [item]
 enchantmentorb=인챈트 오브
 enchantmentshard=인챈트 샤드
+luckybox=행운의 상자
+shardpouch=파편 가방
 
 [itemtooltip]
-enchantmenttabletip=baechi ganeung
+enchantmenttabletip=넣을 수 있는

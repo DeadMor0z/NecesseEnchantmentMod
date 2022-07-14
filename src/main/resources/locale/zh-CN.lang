@@ -4,6 +4,8 @@ enchantmenttable=迷人的桌子
 [item]
 enchantmentorb=迷人的球体
 enchantmentshard=魅力碎片
+luckybox=幸运盒
+shardpouch=渣滓堆
 
 [itemtooltip]
 enchantmenttabletip=可以放置

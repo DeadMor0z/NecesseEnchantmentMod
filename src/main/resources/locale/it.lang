@@ -4,6 +4,8 @@ enchantmenttable=Tavola dell'incanto
 [item]
 enchantmentorb=Orbita dell'incanto
 enchantmentshard=Frammento d'incanto
+luckybox=Scatola fortunata
+shardpouch=Borsa in coccio
 
 [itemtooltip]
 enchantmenttabletip=Può essere posizionato

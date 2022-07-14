@@ -4,6 +4,8 @@ enchantmenttable=Mesa de Encantamiento
 [item]
 enchantmentorb=Orbe de Encanto
 enchantmentshard=Fragmento de Encanto
+luckybox=Caja de la suerte
+shardpouch=Prouch de esquirlas
 
 [itemtooltip]
 enchantmenttabletip=Se puede colocar

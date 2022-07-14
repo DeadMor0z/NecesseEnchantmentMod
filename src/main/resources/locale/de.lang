@@ -4,6 +4,8 @@ enchantmenttable=Verzauberungstisch
 [item]
 enchantmentorb=Verzauberungsorb
 enchantmentshard=Verzauberungsscherbe
+luckybox=Glücksbox
+shardpouch=Scherbenbeutel
 
 [itemtooltip]
 enchantmenttabletip=Kann platziert werden

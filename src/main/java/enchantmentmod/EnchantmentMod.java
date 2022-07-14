@@ -8,7 +8,10 @@ import necesse.entity.mobs.hostile.bosses.*;
 import necesse.entity.mobs.hostile.pirates.PirateCaptainMob;
 import necesse.entity.mobs.hostile.pirates.PirateMob;
 import necesse.entity.objectEntity.interfaces.OEInventory;
+import necesse.inventory.lootTable.LootTable;
+import necesse.inventory.lootTable.lootItem.ChanceLootItem;
 import necesse.inventory.lootTable.lootItem.LootItem;
+import necesse.inventory.lootTable.presets.*;
 import necesse.inventory.recipe.Ingredient;
 import necesse.inventory.recipe.Recipe;
 import necesse.inventory.recipe.Recipes;
@@ -21,7 +24,9 @@ public class EnchantmentMod {
     final String enchantmentOrb = "enchantmentorb";
     final String enchantmentShard = "enchantmentshard";
     final String getEnchantmentTable = "enchantmenttable";
+    final String luckyBox = "luckybox";
     public void init() {
+
         ContainerRegistry.MAGE_CONTAINER = ContainerRegistry.registerMobContainer(
             (client, uniqueSeed, mob, content) ->
                 new CustomMageContainerForm<>(
@@ -83,10 +88,23 @@ public class EnchantmentMod {
             false
         );
 
+        ItemRegistry.registerItem(
+                luckyBox,
+            new LuckyBoxItem(),
+            1,
+            true
+        );
+
+        ItemRegistry.registerItem(
+            "shardpouch",
+            new ShardPouch(),
+            1,
+            true
+        );
     }
 
     public void initResources() {
-        // Empty
+
     }
 
     public void postInit() {
@@ -96,96 +114,86 @@ public class EnchantmentMod {
         final int mixBossAmount = cfg.getMinBossAmount();
         final int maxBossAmount = cfg.getMaxBossAmount();
 
-        SandwormHead.lootTable.items.add(
-            LootItem.between(enchantmentShard, minAmount, maxAmount)
+        LootTable[] lootTable = {
+            SandwormHead.lootTable,
+            VampireMob.lootTable,
+            VoidApprentice.lootTable,
+            SkeletonThrowerMob.lootTable,
+            SkeletonMob.lootTable,
+            NinjaMob.lootTable,
+            HumanRaiderMob.lootTable,
+            GiantCaveSpiderMob.lootTable,
+            FrozenDwarfMob.lootTable,
+            FrostSentryMob.lootTable,
+            BlackCaveSpiderMob.lootTable,
+            AncientSkeletonMob.lootTable,
+            AncientSkeletonMageMob.lootTable,
+            AncientArmoredSkeletonMob.lootTable,
+            PirateMob.lootTable
+        };
+
+        for (LootTable a : lootTable) {
+            a.items.add(LootItem.between(enchantmentShard, minAmount, maxAmount));
+        }
+
+        LootTable[] bossTable = {
+            PirateCaptainMob.lootTable,
+            AncientVultureMob.lootTable,
+            CryoQueenMob.lootTable,
+            EvilsProtectorMob.lootTable,
+            FallenWizardMob.lootTable,
+            QueenSpiderMob.lootTable,
+            ReaperMob.lootTable,
+            SwampGuardianHead.lootTable,
+            VoidWizard.lootTable
+        };
+
+        for (LootTable a : bossTable) {
+            a.items.add(LootItem.between(enchantmentShard, mixBossAmount, maxBossAmount));
+        }
+
+        LootTable[] crates = {
+            AlchemistChestLootTable.instance,
+            AbandonedMineChestLootTable.instance,
+            CaveChestLootTable.basicChest,
+            CaveChestLootTable.desertChest,
+            CaveChestLootTable.snowChest,
+            CaveChestLootTable.swampChest,
+            CaveCryptLootTable.instance,
+            CaveRuinsLootTable.basicChest,
+            CaveRuinsLootTable.desertChest,
+            CaveRuinsLootTable.snowChest,
+            CaveRuinsLootTable.swampChest,
+            CrateLootTable.basicCrate,
+            CrateLootTable.desertCrate,
+            CrateLootTable.snowCrate,
+            CrateLootTable.swampCrate,
+            DeepCaveChestLootTable.basicDeepCaveChest,
+            DeepCaveChestLootTable.desertDeepCaveChest,
+            DeepCaveChestLootTable.snowDeepCaveChest,
+            DeepCaveRuinsLootTable.basicDeepChest,
+            DeepCaveRuinsLootTable.desertDeepChest,
+            DeepCaveRuinsLootTable.snowDeepChest,
+            DeepCaveRuinsLootTable.swampDeepChest,
+            DeepCrateLootTable.basicDeepCrate,
+            DeepCrateLootTable.desertDeepCrate,
+            DeepCrateLootTable.snowDeepCrate,
+            DungeonChestLootTable.instance,
+            PirateChestLootTable.instance,
+            SurfaceRuinsChestLootTable.instance,
+            TempleChestLootTable.instance
+        };
+
+        for (LootTable a : crates) {
+            a.items.add(new ChanceLootItem(0.10F, luckyBox, 1));
+        }
+
+        ZombieMob.lootTable.items.add(
+            new ChanceLootItem(0.05F, enchantmentShard, 1)
         );
 
-        VampireMob.lootTable.items.add(
-            LootItem.between(enchantmentShard, minAmount, maxAmount)
-        );
-
-        SkeletonThrowerMob.lootTable.items.add(
-            LootItem.between(enchantmentShard, minAmount, maxAmount)
-        );
-
-        SkeletonMob.lootTable.items.add(
-            LootItem.between(enchantmentShard, minAmount, maxAmount)
-        );
-
-        NinjaMob.lootTable.items.add(
-            LootItem.between(enchantmentShard, minAmount, maxAmount)
-        );
-
-        HumanRaiderMob.lootTable.items.add(
-            LootItem.between(enchantmentShard, minAmount, maxAmount)
-        );
-
-        GiantCaveSpiderMob.lootTable.items.add(
-            LootItem.between(enchantmentShard, minAmount, maxAmount)
-        );
-
-        FrozenDwarfMob.lootTable.items.add(
-            LootItem.between(enchantmentShard, minAmount, maxAmount)
-        );
-
-        FrostSentryMob.lootTable.items.add(
-            LootItem.between(enchantmentShard, minAmount, maxAmount)
-        );
-
-        BlackCaveSpiderMob.lootTable.items.add(
-            LootItem.between(enchantmentShard, minAmount, maxAmount)
-        );
-
-        AncientSkeletonMob.lootTable.items.add(
-            LootItem.between(enchantmentShard, minAmount, maxAmount)
-        );
-
-        AncientSkeletonMageMob.lootTable.items.add(
-            LootItem.between(enchantmentShard, minAmount, maxAmount)
-        );
-
-        AncientArmoredSkeletonMob.lootTable.items.add(
-            LootItem.between(enchantmentShard, minAmount, maxAmount)
-        );
-
-        PirateMob.lootTable.items.add(
-            LootItem.between(enchantmentShard, minAmount, maxAmount)
-        );
-
-        PirateCaptainMob.lootTable.items.add(
-            LootItem.between(enchantmentShard, mixBossAmount, maxBossAmount)
-        );
-
-        AncientVultureMob.lootTable.items.add(
-            LootItem.between(enchantmentShard, mixBossAmount, maxBossAmount)
-        );
-
-        CryoQueenMob.lootTable.items.add(
-            LootItem.between(enchantmentShard, mixBossAmount, maxBossAmount)
-        );
-
-        EvilsProtectorMob.lootTable.items.add(
-            LootItem.between(enchantmentShard, mixBossAmount, maxBossAmount)
-        );
-
-        FallenWizardMob.lootTable.items.add(
-            LootItem.between(enchantmentShard, mixBossAmount, maxBossAmount)
-        );
-
-        QueenSpiderMob.lootTable.items.add(
-            LootItem.between(enchantmentShard, mixBossAmount, maxBossAmount)
-        );
-
-        ReaperMob.lootTable.items.add(
-            LootItem.between(enchantmentShard, mixBossAmount, maxBossAmount)
-        );
-
-        SwampGuardianHead.lootTable.items.add(
-            LootItem.between(enchantmentShard, mixBossAmount, maxBossAmount)
-        );
-
-        VoidWizard.lootTable.items.add(
-            LootItem.between(enchantmentShard, mixBossAmount, maxBossAmount)
+        ZombieArcherMob.lootTable.items.add(
+            new ChanceLootItem(0.1F, enchantmentShard, 1)
         );
 
         Recipes.registerModRecipe(new Recipe(
@@ -209,4 +217,6 @@ public class EnchantmentMod {
 
     }
 
+
 }
+

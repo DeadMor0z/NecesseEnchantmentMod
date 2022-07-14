@@ -4,6 +4,8 @@ enchantmenttable=Büyü Tablosu
 [item]
 enchantmentorb=Büyü Küresi
 enchantmentshard=Büyü Parçası
+luckybox=Şanslı Kutu
+shardpouch=Shard çantası
 
 [itemtooltip]
 enchantmenttabletip=yerleştirilebilir

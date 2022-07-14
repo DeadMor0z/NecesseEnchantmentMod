@@ -5,6 +5,6 @@ import necesse.inventory.item.matItem.MatItem;
 
 public class EnchantmentShard extends MatItem {
     public EnchantmentShard() {
-        super(5000, Item.Rarity.UNCOMMON);
+        super(100, Item.Rarity.UNCOMMON);
     }
 }

@@ -4,6 +4,8 @@ enchantmenttable=附魔台
 [item]
 enchantmentorb=附魔寶珠
 enchantmentshard=附魔碎片
+luckybox=幸運盒
+shardpouch=碎片袋
 
 [itemtooltip]
 enchantmenttabletip=可放置

@@ -24,9 +24,7 @@ public class Config {
     private int enchantmentCosts = 10;
     private static final Config OBJ = new Config();
     private Config () {
-        System.out.println("Loading config...");
         String filename = GlobalData.rootPath() + "/settings/enchantmentmod/settings.cfg";
-        System.out.println(filename);
         try {
             File file = new File(filename);
             if (!file.exists()) {

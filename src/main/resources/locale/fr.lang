@@ -4,6 +4,8 @@ enchantmenttable=Table d'enchantement
 [item]
 enchantmentorb=Orb d'enchantement
 enchantmentshard=Eclat d'enchantement
+luckybox=Boîte de la chance
+shardpouch=Sac à tessons
 
 [itemtooltip]
 enchantmenttabletip=Peut être placé
