@@ -1,5 +1,8 @@
-# v0.1
-Initial Release
+# v0.2.1
+### Bugfixes
+- Fixed missing Localization Strings
+- Fixed missing Tooltip for LuckyBoxes
+- Fixed missing Pickup Message for LuckyBoxes
 
 # v0.2
 ### Bugfixes
@@ -10,4 +13,7 @@ Initial Release
 - Added Shards to Zombie loot table with a very low chance
 - Reduced Enchantment Shard Stack Limit to 100
 - Added a Shard Pouch which can be bought by the Traveling Merch
-- Added a Lucky Boxes which can be found in chests 
+- Added a Lucky Boxes which can be found in chests
+
+# v0.1
+Initial Release
