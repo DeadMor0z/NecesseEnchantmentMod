@@ -1,6 +1,8 @@
 package enchantmentmod.resources;
 
+import necesse.engine.localization.Localization;
 import necesse.engine.localization.message.GameMessage;
+import necesse.engine.network.Packet;
 import necesse.engine.network.server.ServerClient;
 import necesse.engine.registries.ItemRegistry;
 import necesse.entity.mobs.PlayerMob;
@@ -25,6 +27,7 @@ public class LuckyBoxItem extends EnchantingScrollItem {
     public ListGameTooltips getTooltips(InventoryItem item, PlayerMob perspective) {
         ListGameTooltips tooltips = new ListGameTooltips();
         tooltips.add(new StringTooltips(this.getDisplayName(item), this.getRarityColor()));
+        tooltips.add(Localization.translate("itemtooltip", "rclickinvopentip"));
         return tooltips;
     }
 
@@ -42,15 +45,13 @@ public class LuckyBoxItem extends EnchantingScrollItem {
 
             ServerClient client = container.getClient().getServerClient();
             Random rand = new Random();
-            client.playerMob.getInv().main.addItem(
-                client.playerMob.getLevel(),
-                client.playerMob,
-                new InventoryItem(
+            InventoryItem ivItemCandidate = new InventoryItem(
                     "enchantmentshard",
                     rand.nextInt((100 - 10) + 1) + 10
-                ),
-                "luckybox"
             );
+
+            Packet itemContent = InventoryItem.getContentPacket(ivItemCandidate);
+            client.sendPacket(new PacketPlayerOpenedLuckyBoxRequest(itemContent.getPacketData()));
 
             client.playerMob.getInv().main.removeItems(
                 container.client.playerMob.getLevel(),
@@ -58,6 +59,13 @@ public class LuckyBoxItem extends EnchantingScrollItem {
                 ItemRegistry.getItem("luckybox"),
                 1,
                 "buy"
+            );
+
+            client.playerMob.getInv().main.addItem(
+                    client.playerMob.getLevel(),
+                    client.playerMob,
+                    ivItemCandidate,
+                    "luckybox"
             );
 
             return new ContainerActionResult(-1390943614);

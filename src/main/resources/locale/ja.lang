@@ -9,3 +9,4 @@ shardpouch=シャードバッグ
 
 [itemtooltip]
 enchantmenttabletip=置ける
+shardpouchstored=シャード: <shards>

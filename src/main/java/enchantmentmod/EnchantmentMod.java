@@ -101,6 +101,8 @@ public class EnchantmentMod {
             1,
             true
         );
+
+        PacketRegistry.registerPacket(PacketPlayerOpenedLuckyBoxRequest.class);
     }
 
     public void initResources() {

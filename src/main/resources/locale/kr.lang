@@ -9,3 +9,4 @@ shardpouch=파편 가방
 
 [itemtooltip]
 enchantmenttabletip=넣을 수 있는
+shardpouchstored=샤드: <shards>

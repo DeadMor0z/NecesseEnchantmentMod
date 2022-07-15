@@ -9,3 +9,4 @@ shardpouch=Мешок с осколками
 
 [itemtooltip]
 enchantmenttabletip=Может быть размещен
+shardpouchstored=Осколки: <shards>
