@@ -1,4 +1,4 @@
-package enchantmentmod.resources;
+package enchantmentmod.items.network;
 
 import necesse.engine.network.NetworkPacket;
 import necesse.engine.network.Packet;

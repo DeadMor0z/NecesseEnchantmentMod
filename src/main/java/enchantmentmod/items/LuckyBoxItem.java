@@ -1,5 +1,6 @@
-package enchantmentmod.resources;
+package enchantmentmod.items;
 
+import enchantmentmod.items.network.PacketPlayerOpenedLuckyBoxRequest;
 import necesse.engine.localization.Localization;
 import necesse.engine.localization.message.GameMessage;
 import necesse.engine.network.Packet;
@@ -47,7 +48,7 @@ public class LuckyBoxItem extends EnchantingScrollItem {
             Random rand = new Random();
             InventoryItem ivItemCandidate = new InventoryItem(
                     "enchantmentshard",
-                    rand.nextInt((100 - 10) + 1) + 10
+                    rand.nextInt((100 - 50) + 1) + 50
             );
 
             Packet itemContent = InventoryItem.getContentPacket(ivItemCandidate);

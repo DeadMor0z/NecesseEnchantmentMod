@@ -1,6 +1,12 @@
 package enchantmentmod;
 
-import enchantmentmod.resources.*;
+import enchantmentmod.items.*;
+import enchantmentmod.objects.network.EnchantmentTableContainer;
+import enchantmentmod.objects.network.EnchantmentTableContainerForm;
+import enchantmentmod.items.network.PacketPlayerOpenedLuckyBoxRequest;
+import enchantmentmod.objects.EnchantmentTable;
+import enchantmentmod.mob.network.EnchantmentMageContainer;
+import enchantmentmod.mob.network.EnchantmentMageContainerForm;
 import necesse.engine.modLoader.annotations.ModEntry;
 import necesse.engine.registries.*;
 import necesse.entity.mobs.hostile.*;
@@ -27,11 +33,12 @@ public class EnchantmentMod {
     final String luckyBox = "luckybox";
     public void init() {
 
+        // Mob Mage Patch
         ContainerRegistry.MAGE_CONTAINER = ContainerRegistry.registerMobContainer(
             (client, uniqueSeed, mob, content) ->
-                new CustomMageContainerForm<>(
+                new EnchantmentMageContainerForm<>(
                     client,
-                    new CustomMageContainer(
+                    new EnchantmentMageContainer(
                         client.getClient(),
                         uniqueSeed,
                         (MageHumanMob)mob,
@@ -39,7 +46,7 @@ public class EnchantmentMod {
                     )
                 ),
             (client, uniqueSeed, mob, content, serverObject) ->
-                new CustomMageContainer(
+                new EnchantmentMageContainer(
                     client,
                     uniqueSeed,
                     (MageHumanMob)mob,
@@ -47,11 +54,11 @@ public class EnchantmentMod {
                 )
         );
 
-        int COEICContainerIndex = ContainerRegistry.registerOEContainer(
+        int EnchantmentTableContainerIndex = ContainerRegistry.registerOEContainer(
             (client, uniqueSeed, oe, content) ->
-                new CustomOEInventoryContainerForm<>(
+                new EnchantmentTableContainerForm<>(
                     client,
-                    new CustomOEInventoryContainer(
+                    new EnchantmentTableContainer(
                         client.getClient(),
                         uniqueSeed,
                         (OEInventory)oe,
@@ -59,7 +66,7 @@ public class EnchantmentMod {
                     )
                 ),
             (client, uniqueSeed, oe, content, serverObject) ->
-                new CustomOEInventoryContainer(
+                new EnchantmentTableContainer(
                     client,
                     uniqueSeed,
                     (OEInventory)oe,
@@ -69,7 +76,7 @@ public class EnchantmentMod {
 
         ObjectRegistry.registerObject(
             getEnchantmentTable,
-            new EnchantmentTable(COEICContainerIndex),
+            new EnchantmentTable(EnchantmentTableContainerIndex),
             1,
             true
         );
@@ -85,7 +92,7 @@ public class EnchantmentMod {
             enchantmentShard,
             new EnchantmentShard(),
             1,
-            false
+            true
         );
 
         ItemRegistry.registerItem(
@@ -212,7 +219,7 @@ public class EnchantmentMod {
             1,
             RecipeTechRegistry.IRON_ANVIL,
             new Ingredient[]{
-                new Ingredient(enchantmentOrb, cfg.getEnchantmentCosts()),
+                new Ingredient(enchantmentOrb, cfg.getEnchantmentCosts() * 4),
                 new Ingredient("demonicbar", 5)
             }
         ));

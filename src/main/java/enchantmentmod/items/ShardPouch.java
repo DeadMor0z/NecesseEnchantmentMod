@@ -1,4 +1,4 @@
-package enchantmentmod.resources;
+package enchantmentmod.items;
 
 import necesse.engine.Screen;
 import necesse.engine.localization.Localization;

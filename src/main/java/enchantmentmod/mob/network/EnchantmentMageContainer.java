@@ -1,5 +1,6 @@
-package enchantmentmod.resources;
+package enchantmentmod.mob.network;
 
+import enchantmentmod.Config;
 import necesse.engine.Screen;
 import necesse.engine.network.NetworkClient;
 import necesse.engine.network.Packet;
@@ -21,7 +22,7 @@ import necesse.inventory.container.slots.EnchantableSlot;
 import necesse.inventory.enchants.Enchantable;
 import necesse.level.maps.hudManager.floatText.ItemPickupText;
 
-public class CustomMageContainer extends ShopContainer {
+public class EnchantmentMageContainer extends ShopContainer {
     public final EmptyCustomAction enchantButton;
     public final ContentCustomAction enchantButtonResponse;
     public final BooleanCustomAction setIsEnchanting;
@@ -31,7 +32,7 @@ public class CustomMageContainer extends ShopContainer {
     public final long enchantCostSeed;
     public final PlayerTempInventory enchantInv;
 
-    public CustomMageContainer(final NetworkClient client, int uniqueSeed, MageHumanMob mob, PacketReader contentReader) {
+    public EnchantmentMageContainer(final NetworkClient client, int uniqueSeed, MageHumanMob mob, PacketReader contentReader) {
         super(client, uniqueSeed, mob, contentReader.getNextContentPacket());
         Packet content = contentReader.getNextContentPacket();
         this.enchantInv = client.playerMob.getInv().applyTempInventoryPacket(content, (m) -> {
@@ -49,13 +50,13 @@ public class CustomMageContainer extends ShopContainer {
             if (!client.isServerClient()) {
                 return;
             }
-            if (!CustomMageContainer.this.canEnchant()) {
-                CustomMageContainer.this.getSlot(CustomMageContainer.this.ENCHANT_SLOT).markDirty();
+            if (!EnchantmentMageContainer.this.canEnchant()) {
+                EnchantmentMageContainer.this.getSlot(EnchantmentMageContainer.this.ENCHANT_SLOT).markDirty();
                 return;
             }
-            int enchantCost = CustomMageContainer.this.getEnchantCost();
+            int enchantCost = EnchantmentMageContainer.this.getEnchantCost();
             short randomSeed = (short)GameRandom.globalRandom.nextInt();
-            InventoryItem item = CustomMageContainer.this.getSlot(CustomMageContainer.this.ENCHANT_SLOT).getItem();
+            InventoryItem item = EnchantmentMageContainer.this.getSlot(EnchantmentMageContainer.this.ENCHANT_SLOT).getItem();
             ((Enchantable)item.item).addRandomEnchantment(item, new GameRandom((long)randomSeed));
             if (client.getServerClient().achievementsLoaded()) {
                 client.getServerClient().achievements().ENCHANT_ITEM.markCompleted(client.getServerClient());
@@ -69,8 +70,8 @@ public class CustomMageContainer extends ShopContainer {
             );
             client.getServerClient().newStats.items_enchanted.increment(1);
             Packet itemContent = InventoryItem.getContentPacket(item);
-            CustomMageContainer.this.enchantButtonResponse.runAndSend(itemContent);
-            CustomMageContainer.this.getSlot(CustomMageContainer.this.ENCHANT_SLOT).markDirty();
+            EnchantmentMageContainer.this.enchantButtonResponse.runAndSend(itemContent);
+            EnchantmentMageContainer.this.getSlot(EnchantmentMageContainer.this.ENCHANT_SLOT).markDirty();
             }
         });
         this.enchantButtonResponse = (ContentCustomAction)this.registerAction(new ContentCustomAction() {
@@ -84,7 +85,7 @@ public class CustomMageContainer extends ShopContainer {
         });
         this.setIsEnchanting = (BooleanCustomAction)this.registerAction(new BooleanCustomAction() {
             protected void run(boolean value) {
-                CustomMageContainer.this.isEnchanting = value;
+                EnchantmentMageContainer.this.isEnchanting = value;
             }
         });
     }
@@ -93,8 +94,18 @@ public class CustomMageContainer extends ShopContainer {
         if (this.getSlot(this.ENCHANT_SLOT).isClear()) {
             return 0;
         } else {
+            int costs = Config.getInstance().getEnchantmentCosts();
+            if (this.settlerHappiness != 0) {
+                costs = costs - (int)(this.settlerHappiness / 10);
+            }
+            if (this.settlerHappiness > 0) {
+                costs = costs - 1;
+            }
+            if (costs < 2) {
+                costs = 2;
+            }
             InventoryItem item = this.getSlot(this.ENCHANT_SLOT).getItem();
-            return item.item.isEnchantable(item) ? 10 : 0;
+            return item.item.isEnchantable(item) ? costs : 0;
         }
     }
 
@@ -114,7 +125,7 @@ public class CustomMageContainer extends ShopContainer {
             false,
             false,
             "buy"
-        ) >= Config.getInstance().getEnchantmentCosts();
+        ) >= this.getEnchantCost();
     }
 
     public static Packet getMageContainerContent(MageHumanMob mob, ServerClient client) {

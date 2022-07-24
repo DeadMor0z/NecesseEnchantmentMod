@@ -1,4 +1,4 @@
-package enchantmentmod.resources;
+package enchantmentmod.items;
 
 import necesse.inventory.item.Item;
 import necesse.inventory.item.matItem.MatItem;

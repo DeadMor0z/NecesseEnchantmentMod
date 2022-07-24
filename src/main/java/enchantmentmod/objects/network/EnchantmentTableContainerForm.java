@@ -1,4 +1,4 @@
-package enchantmentmod.resources;
+package enchantmentmod.objects.network;
 
 import necesse.engine.Settings;
 import necesse.engine.localization.Language;
@@ -28,7 +28,7 @@ import necesse.gfx.ui.ButtonColor;
 import java.awt.*;
 
 
-public class CustomOEInventoryContainerForm<T extends CustomOEInventoryContainer> extends ContainerFormSwitcher<T> {
+public class EnchantmentTableContainerForm<T extends EnchantmentTableContainer> extends ContainerFormSwitcher<T> {
     public Form inventoryForm;
     public SettlementObjectStatusFormManager settlementObjectFormManager;
     public FormLabelEdit label;
@@ -52,7 +52,7 @@ public class CustomOEInventoryContainerForm<T extends CustomOEInventoryContainer
         };
     }
 
-    protected CustomOEInventoryContainerForm(Client client, T container, int height) {
+    protected EnchantmentTableContainerForm(Client client, T container, int height) {
         super(client, container);
 
         this.inventoryForm = this.addComponent(new Form(408, height), (form, active) -> {
@@ -182,7 +182,7 @@ public class CustomOEInventoryContainerForm<T extends CustomOEInventoryContainer
         this.updateEnchantActive();
     }
 
-    public CustomOEInventoryContainerForm(Client client, T container) {
+    public EnchantmentTableContainerForm(Client client, T container) {
         this(client, container, getContainerHeight(container.getOEInventory().getInventory().getSize(), 10));
     }
 
@@ -238,17 +238,17 @@ public class CustomOEInventoryContainerForm<T extends CustomOEInventoryContainer
         super.init();
         Localization.addListener(new LocalizationChangeListener() {
             public void onChange(Language language) {
-                CustomOEInventoryContainerForm.this.preview.setX(
-                    CustomOEInventoryContainerForm.this.costLabel.getX() +
-                    CustomOEInventoryContainerForm.this.costLabel.getBoundingBox().width
+                EnchantmentTableContainerForm.this.preview.setX(
+                    EnchantmentTableContainerForm.this.costLabel.getX() +
+                    EnchantmentTableContainerForm.this.costLabel.getBoundingBox().width
                 );
-                CustomOEInventoryContainerForm.this.costText.setX(
-                    CustomOEInventoryContainerForm.this.preview.getX() + 30
+                EnchantmentTableContainerForm.this.costText.setX(
+                    EnchantmentTableContainerForm.this.preview.getX() + 30
                 );
             }
 
             public boolean isDisposed() {
-                return CustomOEInventoryContainerForm.this.isDisposed();
+                return EnchantmentTableContainerForm.this.isDisposed();
             }
         });
     }

@@ -1,4 +1,4 @@
-package enchantmentmod.resources;
+package enchantmentmod.patches;
 
 import necesse.engine.modLoader.annotations.ModMethodPatch;
 import necesse.engine.network.server.ServerClient;

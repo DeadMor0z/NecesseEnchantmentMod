@@ -1,4 +1,4 @@
-package enchantmentmod.resources;
+package enchantmentmod.mob.network;
 
 import necesse.engine.localization.Language;
 import necesse.engine.localization.Localization;
@@ -24,14 +24,14 @@ import necesse.gfx.ui.ButtonColor;
 
 import java.awt.*;
 
-public class CustomMageContainerForm<T extends CustomMageContainer> extends ShopContainerForm<T> {
+public class EnchantmentMageContainerForm<T extends EnchantmentMageContainer> extends ShopContainerForm<T> {
     public Form enchantForm;
     public FormLabel costText;
     public FormLocalTextButton enchantButton;
     public FormLocalLabel costLabel;
     public FormItemPreview preview;
 
-    public CustomMageContainerForm(Client client, T container, int width, int height, int maxExpeditionsHeight) {
+    public EnchantmentMageContainerForm(Client client, T container, int width, int height, int maxExpeditionsHeight) {
         super(client, container, width, height, maxExpeditionsHeight);
 
         this.enchantForm = this.addComponent(
@@ -119,7 +119,7 @@ public class CustomMageContainerForm<T extends CustomMageContainer> extends Shop
         this.updateEnchantActive();
     }
 
-    public CustomMageContainerForm(Client client, T container) {
+    public EnchantmentMageContainerForm(Client client, T container) {
         this(client, container, 408, 170, 240);
     }
 
@@ -127,15 +127,15 @@ public class CustomMageContainerForm<T extends CustomMageContainer> extends Shop
         super.init();
         Localization.addListener(new LocalizationChangeListener() {
             public void onChange(Language language) {
-                CustomMageContainerForm.this.preview.setX(
-                    CustomMageContainerForm.this.costLabel.getX() +
-                    CustomMageContainerForm.this.costLabel.getBoundingBox().width
+                EnchantmentMageContainerForm.this.preview.setX(
+                    EnchantmentMageContainerForm.this.costLabel.getX() +
+                    EnchantmentMageContainerForm.this.costLabel.getBoundingBox().width
                 );
-                CustomMageContainerForm.this.costText.setX(CustomMageContainerForm.this.preview.getX() + 30);
+                EnchantmentMageContainerForm.this.costText.setX(EnchantmentMageContainerForm.this.preview.getX() + 30);
             }
 
             public boolean isDisposed() {
-                return CustomMageContainerForm.this.isDisposed();
+                return EnchantmentMageContainerForm.this.isDisposed();
             }
         });
     }

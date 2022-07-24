@@ -1,3 +1,14 @@
+# v0.3
+### Bugfixes
+- Marked Shards as obtainable Item
+### Changes
+- Refactored Project
+- Removed Config
+- - I will integrate a new one if Mod Config integration is finally there
+- Increased Numbers by x4 (except Lucky Boxes)
+- Increased Lucky Box Min to 50 (pre-patch: 1)
+- Enchantment Costs Reduction depending on the Mage Happiness
+- - The Tables Costs are based on the happiest Mage in your Settlement 
 # v0.2.1
 ### Bugfixes
 - Fixed missing Localization Strings

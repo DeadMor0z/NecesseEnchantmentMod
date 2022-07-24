@@ -1,4 +1,4 @@
-package enchantmentmod.resources;
+package enchantmentmod.objects;
 
 import necesse.engine.localization.Localization;
 import necesse.engine.tickManager.TickManager;
@@ -27,7 +27,7 @@ public class EnchantmentTable extends FurnitureObject {
     private GameTexture texture;
     protected int itemHeight;
     protected String textureName;
-    static int controllerIndex;
+    static int containerIndex;
 
     public EnchantmentTable() {
         super(new Rectangle(32, 32));
@@ -39,7 +39,7 @@ public class EnchantmentTable extends FurnitureObject {
     }
     public EnchantmentTable(int index) {
         super(new Rectangle(32, 32));
-        controllerIndex = index;
+        EnchantmentTable.containerIndex = index;
         this.mapColor = new Color(150, 119, 70);
         this.toolType = ToolType.ALL;
         this.objectHealth = 50;
@@ -120,7 +120,7 @@ public class EnchantmentTable extends FurnitureObject {
 
     public void interact(Level level, int x, int y, PlayerMob player) {
         if (level.isServerLevel()) {
-            OEInventoryContainer.openAndSendContainer(controllerIndex, player.getServerClient(), level, x, y);
+            OEInventoryContainer.openAndSendContainer(containerIndex, player.getServerClient(), level, x, y);
         }
     }
 
