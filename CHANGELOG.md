@@ -1,3 +1,9 @@
+#v0.3.1
+### Bugfixes
+- Fixes the cost calculations for the Table
+### Changes
+- Added Swamp Deep Cave Mob Loot tables
+- Added Pest Warden to Boss Loot table
 # v0.3
 ### Bugfixes
 - Marked Shards as obtainable Item

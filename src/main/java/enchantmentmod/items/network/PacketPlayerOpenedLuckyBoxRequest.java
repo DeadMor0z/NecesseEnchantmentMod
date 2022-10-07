@@ -16,5 +16,6 @@ public class PacketPlayerOpenedLuckyBoxRequest extends Packet {
         client.getClient().playerMob.getLevel().hudManager.addElement(
             new ItemPickupText(client.getClient().playerMob, lootedItem)
         );
+
     }
 }

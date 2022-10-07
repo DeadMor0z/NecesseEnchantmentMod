@@ -48,10 +48,10 @@ public class EnchantmentTableContainer extends OEInventoryContainer {
             if (happiness != 0) {
                 costs = costs -(int)(happiness / 10);
             }
-            if (happiness > 0) {
+            if (costs > 0) {
                 costs = costs - 1;
             }
-            if (costs < 2) {
+            if (costs <= 2) {
                 costs = 2;
             }
             Packet costsPacket = new Packet();

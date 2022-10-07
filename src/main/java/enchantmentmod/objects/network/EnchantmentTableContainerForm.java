@@ -23,7 +23,9 @@ import necesse.gfx.forms.presets.containerComponent.ContainerFormSwitcher;
 import necesse.gfx.forms.presets.containerComponent.settlement.SettlementObjectStatusFormManager;
 import necesse.gfx.gameFont.FontOptions;
 import necesse.gfx.gameTexture.GameSprite;
+import necesse.gfx.gameTexture.GameTexture;
 import necesse.gfx.ui.ButtonColor;
+import necesse.inventory.container.object.OEInventoryContainer;
 
 import java.awt.*;
 
@@ -87,14 +89,16 @@ public class EnchantmentTableContainerForm<T extends EnchantmentTableContainer> 
         FormFlow iconFlow = new FormFlow(this.inventoryForm.getWidth() - 4);
         this.renameTip = new LocalMessage("ui", "renamebutton");
         if (oeInventory.canSetInventoryName()) {
-            this.edit = this.inventoryForm.addComponent(
+            this.edit = (FormContentIconButton)this.inventoryForm.addComponent(
                 new FormContentIconButton(
                     iconFlow.next(-26) - 24,
                     4,
                     FormInputSize.SIZE_24,
                     ButtonColor.BASE,
-                    new GameSprite(Settings.UI.container_rename),
-                    this.renameTip
+                    Settings.UI.container_rename,
+                    new GameMessage[]{
+                        this.renameTip
+                    }
                 )
             );
             this.edit.onClicked((e) -> {
@@ -145,9 +149,9 @@ public class EnchantmentTableContainerForm<T extends EnchantmentTableContainer> 
                 4,
                 FormInputSize.SIZE_24,
                 ButtonColor.BASE,
-                new GameSprite(Settings.UI.container_loot_all),
+                Settings.UI.container_loot_all,
                 new GameMessage[]{
-                    new LocalMessage("ui", "inventorylootall")
+                        new LocalMessage("ui", "inventorylootall")
                 }
             )
         );
@@ -160,7 +164,7 @@ public class EnchantmentTableContainerForm<T extends EnchantmentTableContainer> 
                     4,
                     FormInputSize.SIZE_24,
                     ButtonColor.BASE,
-                    new GameSprite(Settings.UI.inventory_sort),
+                    Settings.UI.inventory_sort,
                     new GameMessage[]{
                         new LocalMessage("ui", "inventorysort")
                     }
@@ -214,24 +218,23 @@ public class EnchantmentTableContainerForm<T extends EnchantmentTableContainer> 
 
     private void runEditUpdate() {
         OEInventory oeInventory = this.container.oeInventory;
-        if (!oeInventory.canSetInventoryName()) {
-            return;
-        }
-        if (this.label.isTyping()) {
-            this.edit.setIconSprite(new GameSprite(Settings.UI.container_rename_save));
-            this.renameTip = new LocalMessage("ui", "savebutton");
-        } else {
-            if (!this.label.getText().equals(oeInventory.getInventoryName())) {
-                oeInventory.setInventoryName(this.label.getText());
-                this.client.network.sendPacket(new PacketOEInventoryNameUpdate(oeInventory, this.label.getText()));
+        if (oeInventory.canSetInventoryName()) {
+            if (this.label.isTyping()) {
+                this.edit.setIcon(Settings.UI.container_rename_save);
+                this.renameTip = new LocalMessage("ui", "savebutton");
+            } else {
+                if (!this.label.getText().equals(oeInventory.getInventoryName())) {
+                    oeInventory.setInventoryName(this.label.getText());
+                    this.client.network.sendPacket(new PacketOEInventoryNameUpdate(oeInventory, this.label.getText()));
+                }
+
+                this.edit.setIcon(Settings.UI.container_rename);
+                this.renameTip = new LocalMessage("ui", "renamebutton");
+                this.label.setText(oeInventory.getInventoryName().translate());
             }
 
-            this.edit.setIconSprite(new GameSprite(Settings.UI.container_rename));
-            this.renameTip = new LocalMessage("ui", "renamebutton");
-            this.label.setText(oeInventory.getInventoryName().translate());
+            this.edit.setTooltips(this.renameTip);
         }
-
-        this.edit.setTooltips(new GameMessage[]{this.renameTip});
     }
 
     protected void init() {

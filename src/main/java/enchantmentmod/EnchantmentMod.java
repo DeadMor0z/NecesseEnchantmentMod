@@ -14,6 +14,8 @@ import necesse.entity.mobs.hostile.bosses.*;
 import necesse.entity.mobs.hostile.pirates.PirateCaptainMob;
 import necesse.entity.mobs.hostile.pirates.PirateMob;
 import necesse.entity.objectEntity.interfaces.OEInventory;
+import necesse.gfx.gameTexture.GameTexture;
+import necesse.inventory.container.object.CraftingStationContainer;
 import necesse.inventory.lootTable.LootTable;
 import necesse.inventory.lootTable.lootItem.ChanceLootItem;
 import necesse.inventory.lootTable.lootItem.LootItem;
@@ -24,6 +26,8 @@ import necesse.inventory.recipe.Recipes;
 import necesse.engine.network.PacketReader;
 import necesse.engine.registries.ItemRegistry;
 import necesse.entity.mobs.friendly.human.humanShop.MageHumanMob;
+import necesse.level.gameObject.DemonicWorkstationObject;
+import necesse.level.gameObject.WorkstationObject;
 
 @ModEntry
 public class EnchantmentMod {
@@ -32,7 +36,6 @@ public class EnchantmentMod {
     final String getEnchantmentTable = "enchantmenttable";
     final String luckyBox = "luckybox";
     public void init() {
-
         // Mob Mage Patch
         ContainerRegistry.MAGE_CONTAINER = ContainerRegistry.registerMobContainer(
             (client, uniqueSeed, mob, content) ->
@@ -53,7 +56,6 @@ public class EnchantmentMod {
                     new PacketReader(content)
                 )
         );
-
         int EnchantmentTableContainerIndex = ContainerRegistry.registerOEContainer(
             (client, uniqueSeed, oe, content) ->
                 new EnchantmentTableContainerForm<>(
@@ -138,7 +140,12 @@ public class EnchantmentMod {
             AncientSkeletonMob.lootTable,
             AncientSkeletonMageMob.lootTable,
             AncientArmoredSkeletonMob.lootTable,
-            PirateMob.lootTable
+            PirateMob.lootTable,
+            SwampCaveSpiderMob.lootTable,
+            SwampDwellerMob.lootTable,
+            SwampShooterMob.lootTable,
+            SwampSkeletonMob.lootTable,
+            SwampSlimeMob.lootTable,
         };
 
         for (LootTable a : lootTable) {
@@ -154,7 +161,8 @@ public class EnchantmentMod {
             QueenSpiderMob.lootTable,
             ReaperMob.lootTable,
             SwampGuardianHead.lootTable,
-            VoidWizard.lootTable
+            VoidWizard.lootTable,
+            PestWardenHead.lootTable,
         };
 
         for (LootTable a : bossTable) {
@@ -203,6 +211,10 @@ public class EnchantmentMod {
 
         ZombieArcherMob.lootTable.items.add(
             new ChanceLootItem(0.1F, enchantmentShard, 1)
+        );
+
+        SwampZombieMob.lootTable.items.add(
+                new ChanceLootItem(0.1F, enchantmentShard, 1)
         );
 
         Recipes.registerModRecipe(new Recipe(
