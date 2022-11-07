@@ -92,6 +92,9 @@ public class EnchantmentMageContainerForm<T extends EnchantmentMageContainer> ex
             )
         );
 
+
+// ... neither are these
+
         this.enchantButton.onClicked((e) -> {
             container.enchantButton.runAndSend();
         });
@@ -165,8 +168,8 @@ public class EnchantmentMageContainerForm<T extends EnchantmentMageContainer> ex
         super.draw(tickManager, perspective, renderBox);
     }
 
-    public void setDefaultPos() {
-        super.setDefaultPos();
+    public void onWindowResized() {
+        super.onWindowResized();
         ContainerComponent.setPosFocus(this.enchantForm);
     }
 }

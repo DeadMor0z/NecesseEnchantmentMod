@@ -1,4 +1,8 @@
-#v0.3.1
+# v0.3.2
+### Changes
+- Nothing, recompiled to 0.21.26
+
+# v0.3.1
 ### Bugfixes
 - Fixes the cost calculations for the Table
 ### Changes

@@ -65,6 +65,7 @@ public class EnchantmentTableContainerForm<T extends EnchantmentTableContainer> 
             this.runEditUpdate();
         });
 
+
         OEInventory oeInventory = container.oeInventory;
         FontOptions labelOptions = new FontOptions(20);
         this.label = this.inventoryForm.addComponent(
@@ -194,11 +195,6 @@ public class EnchantmentTableContainerForm<T extends EnchantmentTableContainer> 
         return (inventorySize + columns - 1) / columns * 40 + 30 + 8;
     }
 
-    public void setDefaultPos() {
-        ContainerComponent.setPosFocus(this.inventoryForm);
-        this.settlementObjectFormManager.setDefaultPositions();
-    }
-
     public boolean shouldOpenInventory() {
         return true;
     }
@@ -265,6 +261,11 @@ public class EnchantmentTableContainerForm<T extends EnchantmentTableContainer> 
         this.settlementObjectFormManager.updateButtons();
         super.draw(tickManager, perspective, renderBox);
         this.updateEnchantActive();
+    }
+
+    public void onWindowResized() {
+        super.onWindowResized();
+        ContainerComponent.setPosFocus(this.inventoryForm);
     }
 }
 

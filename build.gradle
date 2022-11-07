@@ -8,8 +8,8 @@ plugins {
 def modInfo = [
         modID          : "mikerohsoft.enchantmentmod",
         modName        : "BetterEnchantment",
-        modVersion     : "0.3.1",
-        gameVersion    : "0.21.25",
+        modVersion     : "0.3.2",
+        gameVersion    : "0.21.26",
         modDescription : "Hoping for an better Enchantment System",
         author         : "Mike Rohsoft",
         clientside     : false,
