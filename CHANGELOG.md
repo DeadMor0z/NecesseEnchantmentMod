@@ -1,3 +1,7 @@
+# v0.3.21
+### Changes
+- Ask Fair...
+
 # v0.3.2
 ### Changes
 - Nothing, recompiled to 0.21.26

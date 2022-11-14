@@ -177,7 +177,8 @@ public class EnchantmentTableContainerForm<T extends EnchantmentTableContainer> 
 
         this.settlementObjectFormManager = container.settlementObjectManager.getFormManager(
             this,
-            this.inventoryForm
+            this.inventoryForm,
+            this.client
         );
 
         this.settlementObjectFormManager.addConfigButtonRow(this.inventoryForm, iconFlow, 4, -1);
