@@ -39,7 +39,7 @@ public class EnchantmentMageContainer extends ShopContainer {
             return this.isClosed();
         });
         this.ENCHANT_SLOT = this.addSlot(new EnchantableSlot(this.enchantInv, 0));
-        this.setInventoryQuickTransfer((s) -> {
+        this.addInventoryQuickTransfer((s) -> {
             return this.isEnchanting;
         }, this.ENCHANT_SLOT, this.ENCHANT_SLOT);
         this.mageMob = mob;
