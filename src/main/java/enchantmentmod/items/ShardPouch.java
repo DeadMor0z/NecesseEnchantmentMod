@@ -1,5 +1,7 @@
 package enchantmentmod.items;
-
+import java.awt.geom.Point2D;
+import java.util.HashSet;
+import java.util.function.Supplier;
 import necesse.engine.Screen;
 import necesse.engine.localization.Localization;
 import necesse.engine.network.PacketReader;
@@ -13,6 +15,7 @@ import necesse.gfx.GameResources;
 import necesse.gfx.drawOptions.itemAttack.ItemAttackDrawOptions;
 import necesse.gfx.gameTooltips.ListGameTooltips;
 import necesse.inventory.Inventory;
+import necesse.inventory.InventoryAddConsumer;
 import necesse.inventory.InventoryItem;
 import necesse.inventory.PlayerInventorySlot;
 import necesse.inventory.container.Container;
@@ -23,17 +26,13 @@ import necesse.inventory.recipe.Ingredient;
 import necesse.inventory.recipe.IngredientCounter;
 import necesse.level.maps.Level;
 
-import java.awt.geom.Point2D;
-import java.util.HashSet;
-import java.util.function.Supplier;
-
 public class ShardPouch extends Item {
     public HashSet<String> combinePurposes = new HashSet();
 
     public ShardPouch() {
         super(1);
         this.setItemCategory(new String[]{"misc", "pouches"});
-        this.rarity = Item.Rarity.RARE;
+        this.rarity = Rarity.RARE;
         this.combinePurposes.add("leftclick");
         this.combinePurposes.add("leftclickinv");
         this.combinePurposes.add("rightclick");
@@ -44,8 +43,6 @@ public class ShardPouch extends Item {
 
     public ListGameTooltips getTooltips(InventoryItem item, PlayerMob perspective) {
         ListGameTooltips tooltips = super.getTooltips(item, perspective);
-        tooltips.add(Localization.translate("itemtooltip", "coinpouchtip1"));
-        tooltips.add(Localization.translate("itemtooltip", "coinpouchtip2"));
         tooltips.add(Localization.translate("itemtooltip", "shardpouchstored", "shards", GameUtils.metricNumber((long)this.getCurrentShards(item))));
         return tooltips;
     }
@@ -55,10 +52,10 @@ public class ShardPouch extends Item {
     }
 
     public InventoryItem onAttack(Level level, int x, int y, PlayerMob player, int attackHeight, InventoryItem item, PlayerInventorySlot slot, int animAttack, int seed, PacketReader contentReader) {
-        int currentCoins = this.getCurrentShards(item);
-        int thrown = Math.min(1000, currentCoins);
+        int currentShards = this.getCurrentShards(item);
+        int thrown = Math.min(1000, currentShards);
         if (thrown > 0) {
-            this.saveCurrentShards(item, currentCoins - thrown);
+            this.saveCurrentShards(item, currentShards - thrown);
             if (level.isServerLevel()) {
                 Point2D.Float dir = GameMath.normalize((float)x - player.x, (float)y - player.y);
                 level.entityManager.pickups.add((new InventoryItem("enchantmentshard", thrown)).getPickupEntity(level, player.x, player.y, dir.x * 175.0F, dir.y * 175.0F));
@@ -72,20 +69,20 @@ public class ShardPouch extends Item {
 
     public Supplier<ContainerActionResult> getInventoryRightClickAction(Container container, InventoryItem item, int slotIndex, ContainerSlot slot) {
         return container.client.playerMob.isInventoryExtended() ? () -> {
-            int currentCoins = this.getCurrentShards(item);
-            if (currentCoins > 0) {
+            int currentShards = this.getCurrentShards(item);
+            if (currentShards > 0) {
                 ContainerSlot clientDraggingSlot = container.getClientDraggingSlot();
-                Item coinItem = ItemRegistry.getItem("enchantmentshard");
-                int startItems = Math.min(currentCoins, coinItem.getStackSize());
-                InventoryItem coins = new InventoryItem(coinItem, startItems);
+                Item shardItem = ItemRegistry.getItem("enchantmentshard");
+                int startItems = Math.min(currentShards, shardItem.getStackSize());
+                InventoryItem shards = new InventoryItem(shardItem, startItems);
                 if (clientDraggingSlot.isClear()) {
-                    this.saveCurrentShards(item, currentCoins - coins.getAmount());
-                    clientDraggingSlot.setItem(coins);
+                    this.saveCurrentShards(item, currentShards - shards.getAmount());
+                    clientDraggingSlot.setItem(shards);
                     return new ContainerActionResult(2657165);
                 } else {
-                    if (clientDraggingSlot.getItem().canCombine(container.client.playerMob.getLevel(), container.client.playerMob, coins, "pouchtransfer") && clientDraggingSlot.getItem().combine(container.client.playerMob.getLevel(), container.client.playerMob, coins, coins.getAmount(), false, "pouchtransfer").success) {
-                        int itemsCombined = startItems - coins.getAmount();
-                        this.saveCurrentShards(item, currentCoins - itemsCombined);
+                    if (clientDraggingSlot.getItem().canCombine(container.client.playerMob.getLevel(), container.client.playerMob, shards, "pouchtransfer") && clientDraggingSlot.getItem().combine(container.client.playerMob.getLevel(), container.client.playerMob, clientDraggingSlot.getInventory(), clientDraggingSlot.getInventorySlot(), shards, shards.getAmount(), false, "pouchtransfer", (InventoryAddConsumer)null).success) {
+                        int itemsCombined = startItems - shards.getAmount();
+                        this.saveCurrentShards(item, currentShards - itemsCombined);
                     }
 
                     return new ContainerActionResult(10619587);
@@ -104,19 +101,23 @@ public class ShardPouch extends Item {
         }
     }
 
-    public boolean onCombine(Level level, PlayerMob player, InventoryItem me, InventoryItem other, int maxStackSize, int amount, boolean combineIsNew, String purpose) {
+    public boolean onCombine(Level level, PlayerMob player, Inventory myInventory, int mySlot, InventoryItem me, InventoryItem other, int maxStackSize, int amount, boolean combineIsNew, String purpose, InventoryAddConsumer addConsumer) {
         if (this.combinePurposes.contains(purpose) && other.item.getStringID().equals("enchantmentshard")) {
             this.saveCurrentShards(me, this.getCurrentShards(me) + amount);
             other.setAmount(other.getAmount() - amount);
+            if (addConsumer != null) {
+                addConsumer.add((Inventory)null, 0, amount);
+            }
+
             return true;
         } else {
-            return super.onCombine(level, player, me, other, maxStackSize, amount, combineIsNew, purpose);
+            return super.onCombine(level, player, myInventory, mySlot, me, other, maxStackSize, amount, combineIsNew, purpose, addConsumer);
         }
     }
 
     public ComparableSequence<Integer> getInventoryAddPriority(Level level, PlayerMob player, Inventory inventory, int inventorySlot, InventoryItem item, InventoryItem input, String purpose) {
         ComparableSequence<Integer> last = super.getInventoryAddPriority(level, player, inventory, inventorySlot, item, input, purpose);
-        return input.item.getStringID().equals("enchantmentshard") && purpose.equals("itempickup") ? last.beforeBy((int)-10000) : last;
+        return input.item.getStringID().equals("enchantmentshard") && purpose.equals("itempickup") ? last.beforeBy(-10000) : last;
     }
 
     public int getInventoryAmount(Level level, PlayerMob player, InventoryItem item, Item requestItem, String purpose) {
@@ -128,13 +129,18 @@ public class ShardPouch extends Item {
         super.countIngredientAmount(level, player, inventory, inventorySlot, item, handler);
     }
 
-    public boolean inventoryAddItem(Level level, PlayerMob player, InventoryItem item, InventoryItem input, String purpose, boolean isValid, int stackLimit, boolean combineIsValid) {
-        if (!input.item.getStringID().equals("enchantmentshard") || !purpose.equals("itempickup") && !purpose.equals("sell")) {
-            return super.inventoryAddItem(level, player, item, input, purpose, isValid, stackLimit, combineIsValid);
-        } else {
-            this.saveCurrentShards(item, this.getCurrentShards(item) + input.getAmount());
+    public boolean inventoryAddItem(Level level, PlayerMob player, Inventory myInventory, int mySlot, InventoryItem me, InventoryItem input, String purpose, boolean isValid, int stackLimit, boolean combineIsValid, InventoryAddConsumer addConsumer) {
+        if (input.item.getStringID().equals("enchantmentshard") && (purpose.equals("itempickup") || purpose.equals("sell"))) {
+            int amount = input.getAmount();
+            this.saveCurrentShards(me, this.getCurrentShards(me) + amount);
+            if (addConsumer != null) {
+                addConsumer.add((Inventory)null, 0, amount);
+            }
+
             input.setAmount(0);
             return true;
+        } else {
+            return super.inventoryAddItem(level, player, myInventory, mySlot, me, input, purpose, isValid, stackLimit, combineIsValid, addConsumer);
         }
     }
 
@@ -163,7 +169,8 @@ public class ShardPouch extends Item {
         return item.getGndData().getInt("enchantmentshard");
     }
 
-    protected void saveCurrentShards(InventoryItem item, int coins) {
-        item.getGndData().setInt("enchantmentshard", coins);
+    protected void saveCurrentShards(InventoryItem item, int shards) {
+        item.getGndData().setInt("enchantmentshard", shards);
     }
 }
+

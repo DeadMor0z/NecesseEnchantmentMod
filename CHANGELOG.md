@@ -1,3 +1,17 @@
+# v0.4
+### Changes
+- Uses new biased Enchantment System
+### Fixes
+- Fix Shard Pouch
+
+# v0.3.23
+### Changes
+- Nothing, recompiled to 0.21.28
+
+# v0.3.22
+### Changes
+- Nothing, recompiled to 0.21.27
+
 # v0.3.21
 ### Changes
 - Ask Fair...
