@@ -1,5 +1,6 @@
 package enchantmentmod.items;
 
+import enchantmentmod.Config;
 import enchantmentmod.items.network.PacketPlayerOpenedLuckyBoxRequest;
 import necesse.engine.localization.Localization;
 import necesse.engine.localization.message.GameMessage;
@@ -46,9 +47,10 @@ public class LuckyBoxItem extends EnchantingScrollItem {
 
             ServerClient client = container.getClient().getServerClient();
             Random rand = new Random();
+            Config cfg = Config.getInstance();
             InventoryItem ivItemCandidate = new InventoryItem(
                     "enchantmentshard",
-                    rand.nextInt((100 - 50) + 1) + 50
+                    rand.nextInt((cfg.getLuckyBoxMax() - cfg.getLuckyBoxMin()) + 1) + cfg.getLuckyBoxMin()
             );
 
             Packet itemContent = InventoryItem.getContentPacket(ivItemCandidate);
@@ -62,13 +64,7 @@ public class LuckyBoxItem extends EnchantingScrollItem {
                 "buy"
             );
 
-            client.playerMob.getInv().main.addItem(
-                    client.playerMob.getLevel(),
-                    client.playerMob,
-                    ivItemCandidate,
-                    "luckybox"
-            );
-
+            client.playerMob.getInv().addItem(ivItemCandidate, true, "itempickup", null);
             return new ContainerActionResult(-1390943614);
         };
     }

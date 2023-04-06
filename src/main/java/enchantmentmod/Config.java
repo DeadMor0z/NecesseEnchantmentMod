@@ -1,15 +1,54 @@
 package enchantmentmod;
 
+import necesse.engine.GlobalData;
+import necesse.engine.save.LoadData;
+import necesse.engine.save.SaveData;
+
+import java.io.File;
+
 public class Config {
-    private int minAmount = 8;
-    private int maxAmount = 40;
-    private int minBossAmount = 16;
-    private int maxBossAmount = 80;
-    private int oneOrbAreNShards = 100;
-    private int enchantmentCosts = 10;
+    private Integer minAmount = 8;
+    private Integer maxAmount = 40;
+    private Integer minBossAmount = 16;
+    private Integer maxBossAmount = 80;
+    private Integer oneOrbAreNShards = 100;
+    private Integer enchantmentCosts = 10;
+    private Integer luckyBoxMin = 50;
+    private Integer luckyBoxMax = 100;
     private static final Config OBJ = new Config();
     private Config () {
+        File file = new File(GlobalData.cfgPath() + "betterenchantment.cfg");
+        if (!file.exists()) {
+            SaveData saveFile = new SaveData("CONFIG");
+            SaveData defaultSave = new SaveData("default");
+            defaultSave.addInt("minAmount", this.minAmount);
+            defaultSave.addInt("maxAmount", this.maxAmount);
+            defaultSave.addInt("minBossAmount", this.minBossAmount);
+            defaultSave.addInt("maxBossAmount", this.maxBossAmount);
+            defaultSave.addInt("oneOrbAreNShards", this.oneOrbAreNShards);
+            defaultSave.addInt("enchantmentCosts", this.enchantmentCosts);
+            defaultSave.addInt("luckyBoxMin", this.luckyBoxMin);
+            defaultSave.addInt("luckyBoxMax", this.luckyBoxMax);
+            saveFile.addSaveData(defaultSave);
+            saveFile.saveScript(file);
+            return;
+        }
 
+        LoadData save = new LoadData(file);
+        for (LoadData saveData : save.getLoadData()) {
+            if (!"default".equals(saveData.getName())) {
+                continue;
+            }
+            this.minAmount = saveData.getInt("minAmount", this.minAmount);
+            this.maxAmount = saveData.getInt("maxAmount", this.maxAmount);
+            this.minBossAmount = saveData.getInt("minBossAmount", this.minBossAmount);
+            this.maxBossAmount = saveData.getInt("maxBossAmount", this.maxBossAmount);
+            this.oneOrbAreNShards = saveData.getInt("oneOrbAreNShards", this.oneOrbAreNShards);
+            this.enchantmentCosts = saveData.getInt("enchantmentCosts", this.enchantmentCosts);
+            this.luckyBoxMin = saveData.getInt("luckyBoxMin", this.luckyBoxMin);
+            this.luckyBoxMax = saveData.getInt("luckyBoxMax", this.luckyBoxMax);
+            break;
+        }
     }
 
     public static Config getInstance() {
@@ -62,6 +101,14 @@ public class Config {
 
     public int getEnchantmentCosts() {
         return this.enchantmentCosts;
+    }
+
+    public int getLuckyBoxMin() {
+        return this.luckyBoxMin;
+    }
+
+    public int getLuckyBoxMax() {
+        return this.luckyBoxMax;
     }
 
 }

@@ -1,3 +1,12 @@
+# v0.5
+### Changes
+- Mod Creates Config again
+- LuckyBox loot merge into pouches
+
+# v0.41
+### Changes
+- Nothing, recompiled to 0.21.29
+
 # v0.4
 ### Changes
 - Uses new biased Enchantment System
