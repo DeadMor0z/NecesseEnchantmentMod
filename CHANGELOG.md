@@ -1,3 +1,6 @@
+# v0.60
+- Mod creates Config Entry for each World
+
 # v0.5
 ### Changes
 - Mod Creates Config again
