@@ -7,6 +7,7 @@ import necesse.engine.localization.message.GameMessage;
 import necesse.engine.network.Packet;
 import necesse.engine.network.server.ServerClient;
 import necesse.engine.registries.ItemRegistry;
+import necesse.engine.util.GameBlackboard;
 import necesse.entity.mobs.PlayerMob;
 import necesse.gfx.gameTooltips.ListGameTooltips;
 import necesse.gfx.gameTooltips.StringTooltips;
@@ -26,9 +27,9 @@ public class LuckyBoxItem extends EnchantingScrollItem {
         super();
     }
     @Override
-    public ListGameTooltips getTooltips(InventoryItem item, PlayerMob perspective) {
+    public ListGameTooltips getTooltips(InventoryItem item, PlayerMob perspective, GameBlackboard blackboard) {
         ListGameTooltips tooltips = new ListGameTooltips();
-        tooltips.add(new StringTooltips(this.getDisplayName(item), this.getRarityColor()));
+        tooltips.add(new StringTooltips(this.getDisplayName(item), this.getRarityColor(item)));
         tooltips.add(Localization.translate("itemtooltip", "rclickinvopentip"));
         return tooltips;
     }

@@ -77,7 +77,7 @@ public class EnchantmentMageContainerForm<T extends EnchantmentMageContainer> ex
         );
 
         this.enchantForm.addComponent(
-                new FormContainerEnchantSlot(client, container.ENCHANT_SLOT, 40, 50)
+                new FormContainerEnchantSlot(client, container, container.ENCHANT_SLOT, 40, 50)
         );
 
         this.enchantButton = this.enchantForm.addComponent(

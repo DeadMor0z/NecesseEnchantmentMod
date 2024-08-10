@@ -130,6 +130,7 @@ public class EnchantmentMageContainer extends ShopContainer {
             true,
             false,
             false,
+            false,
             "buy"
         ) >= this.getEnchantCost();
     }

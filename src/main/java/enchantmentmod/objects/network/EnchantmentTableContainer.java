@@ -141,6 +141,7 @@ public class EnchantmentTableContainer extends OEInventoryContainer {
             true,
             false,
             false,
+            false,
             "buy"
         ) >= this.thisEnchantmentCosts;
     }
