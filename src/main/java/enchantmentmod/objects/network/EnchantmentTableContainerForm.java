@@ -8,7 +8,8 @@ import necesse.engine.localization.message.GameMessage;
 import necesse.engine.localization.message.LocalMessage;
 import necesse.engine.network.client.Client;
 import necesse.engine.network.packet.PacketOEInventoryNameUpdate;
-import necesse.engine.tickManager.TickManager;
+import necesse.engine.gameLoop.tickManager.TickManager;
+import necesse.engine.window.GameWindow;
 import necesse.entity.mobs.PlayerMob;
 import necesse.entity.objectEntity.interfaces.OEInventory;
 import necesse.gfx.fairType.TypeParsers;
@@ -264,8 +265,8 @@ public class EnchantmentTableContainerForm<T extends EnchantmentTableContainer> 
         this.updateEnchantActive();
     }
 
-    public void onWindowResized() {
-        super.onWindowResized();
+    public void onWindowResized(GameWindow window) {
+        super.onWindowResized(window);
         ContainerComponent.setPosFocus(this.inventoryForm);
     }
 }

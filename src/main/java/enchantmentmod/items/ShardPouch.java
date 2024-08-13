@@ -3,11 +3,11 @@ import java.awt.geom.Point2D;
 import java.util.HashSet;
 import java.util.function.Supplier;
 import java.util.Collection;
-import necesse.engine.Screen;
 import necesse.engine.localization.Localization;
 import necesse.engine.network.PacketReader;
 import necesse.engine.registries.ItemRegistry;
 import necesse.engine.sound.SoundEffect;
+import necesse.engine.sound.SoundManager;
 import necesse.engine.util.ComparableSequence;
 import necesse.engine.util.GameBlackboard;
 import necesse.engine.util.GameMath;
@@ -63,7 +63,7 @@ public class ShardPouch extends Item {
                 Point2D.Float dir = GameMath.normalize((float)x - player.x, (float)y - player.y);
                 level.entityManager.pickups.add((new InventoryItem("enchantmentshard", thrown)).getPickupEntity(level, player.x, player.y, dir.x * 175.0F, dir.y * 175.0F));
             } else if (level.isClientLevel()) {
-                Screen.playSound(GameResources.coins, SoundEffect.effect(player));
+                SoundManager.playSound(GameResources.coins, SoundEffect.effect(player));
             }
         }
 
