@@ -8,8 +8,8 @@ plugins {
 def modInfo = [
         modID          : "mikerohsoft.enchantmentmod",
         modName        : "BetterEnchantment",
-        modVersion     : "0.60",
-        gameVersion    : "0.21.29",
+        modVersion     : "0.62",
+        gameVersion    : "0.26.0",
         modDescription : "Hoping for an better Enchantment System",
         author         : "Mike Rohsoft",
         clientside     : false,
@@ -17,7 +17,7 @@ def modInfo = [
         modOptionalDependencies : [],
 ]
 // Set this to your game's directory
-String gameDirectory = "D:/SteamLibrary/steamapps/common/Necesse"
+String gameDirectory = "C://Games/Steam/common/Necesse"
 
 // Set to false to disable full decompile, here or as a gradle parameter -PuseDecompiledSources=false
 def useDecompiledSources = true

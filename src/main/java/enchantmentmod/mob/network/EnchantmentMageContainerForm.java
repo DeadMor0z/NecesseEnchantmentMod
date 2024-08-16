@@ -5,7 +5,8 @@ import necesse.engine.localization.Localization;
 import necesse.engine.localization.LocalizationChangeListener;
 import necesse.engine.localization.message.LocalMessage;
 import necesse.engine.network.client.Client;
-import necesse.engine.tickManager.TickManager;
+import necesse.engine.gameLoop.tickManager.TickManager;
+import necesse.engine.window.GameWindow;
 import necesse.entity.mobs.PlayerMob;
 import necesse.entity.mobs.friendly.human.humanShop.MageHumanMob;
 import necesse.gfx.fairType.FairType;
@@ -77,7 +78,7 @@ public class EnchantmentMageContainerForm<T extends EnchantmentMageContainer> ex
         );
 
         this.enchantForm.addComponent(
-                new FormContainerEnchantSlot(client, container.ENCHANT_SLOT, 40, 50)
+                new FormContainerEnchantSlot(client, container, container.ENCHANT_SLOT, 40, 50)
         );
 
         this.enchantButton = this.enchantForm.addComponent(
@@ -168,8 +169,8 @@ public class EnchantmentMageContainerForm<T extends EnchantmentMageContainer> ex
         super.draw(tickManager, perspective, renderBox);
     }
 
-    public void onWindowResized() {
-        super.onWindowResized();
+    public void onWindowResized(GameWindow window) {
+        super.onWindowResized(window);
         ContainerComponent.setPosFocus(this.enchantForm);
     }
 }

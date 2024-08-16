@@ -2,7 +2,6 @@ package enchantmentmod.objects.network;
 
 import enchantmentmod.Config;
 import enchantmentmod.mob.network.EnchantmentMageContainer;
-import necesse.engine.Screen;
 import necesse.engine.network.NetworkClient;
 import necesse.engine.network.Packet;
 import necesse.engine.network.PacketReader;
@@ -10,6 +9,7 @@ import necesse.engine.network.PacketWriter;
 import necesse.engine.registries.EnchantmentRegistry;
 import necesse.engine.registries.ItemRegistry;
 import necesse.engine.sound.SoundEffect;
+import necesse.engine.sound.SoundManager;
 import necesse.engine.util.GameMath;
 import necesse.engine.util.GameRandom;
 import necesse.engine.util.TicketSystemList;
@@ -113,7 +113,7 @@ public class EnchantmentTableContainer extends OEInventoryContainer {
             if (!client.isClientClient()) {
                 return;
             }
-            Screen.playSound(GameResources.pop, SoundEffect.effect(client.playerMob));
+            SoundManager.playSound(GameResources.pop, SoundEffect.effect(client.playerMob));
             InventoryItem enchantedItem = InventoryItem.fromContentPacket(content);
             client.playerMob.getLevel().hudManager.addElement(new ItemPickupText(client.playerMob, enchantedItem));
         }
@@ -139,6 +139,7 @@ public class EnchantmentTableContainer extends OEInventoryContainer {
         return this.canBeEnchanted() && client.playerMob.getInv().getAmount(
             ItemRegistry.getItem("enchantmentorb"),
             true,
+            false,
             false,
             false,
             "buy"

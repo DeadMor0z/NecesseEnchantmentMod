@@ -2,12 +2,14 @@ package enchantmentmod.items;
 import java.awt.geom.Point2D;
 import java.util.HashSet;
 import java.util.function.Supplier;
-import necesse.engine.Screen;
+import java.util.Collection;
 import necesse.engine.localization.Localization;
 import necesse.engine.network.PacketReader;
 import necesse.engine.registries.ItemRegistry;
 import necesse.engine.sound.SoundEffect;
+import necesse.engine.sound.SoundManager;
 import necesse.engine.util.ComparableSequence;
+import necesse.engine.util.GameBlackboard;
 import necesse.engine.util.GameMath;
 import necesse.engine.util.GameUtils;
 import necesse.entity.mobs.PlayerMob;
@@ -17,6 +19,7 @@ import necesse.gfx.gameTooltips.ListGameTooltips;
 import necesse.inventory.Inventory;
 import necesse.inventory.InventoryAddConsumer;
 import necesse.inventory.InventoryItem;
+import necesse.inventory.InventoryItemsRemoved;
 import necesse.inventory.PlayerInventorySlot;
 import necesse.inventory.container.Container;
 import necesse.inventory.container.ContainerActionResult;
@@ -41,8 +44,8 @@ public class ShardPouch extends Item {
         this.worldDrawSize = 32;
     }
 
-    public ListGameTooltips getTooltips(InventoryItem item, PlayerMob perspective) {
-        ListGameTooltips tooltips = super.getTooltips(item, perspective);
+    public ListGameTooltips getTooltips(InventoryItem item, PlayerMob perspective, GameBlackboard blackboard) {
+        ListGameTooltips tooltips = super.getTooltips(item, perspective, blackboard);
         tooltips.add(Localization.translate("itemtooltip", "shardpouchstored", "shards", GameUtils.metricNumber((long)this.getCurrentShards(item))));
         return tooltips;
     }
@@ -60,7 +63,7 @@ public class ShardPouch extends Item {
                 Point2D.Float dir = GameMath.normalize((float)x - player.x, (float)y - player.y);
                 level.entityManager.pickups.add((new InventoryItem("enchantmentshard", thrown)).getPickupEntity(level, player.x, player.y, dir.x * 175.0F, dir.y * 175.0F));
             } else if (level.isClientLevel()) {
-                Screen.playSound(GameResources.coins, SoundEffect.effect(player));
+                SoundManager.playSound(GameResources.coins, SoundEffect.effect(player));
             }
         }
 
@@ -152,9 +155,9 @@ public class ShardPouch extends Item {
         return requestItem.getStringID().equals("enchantmentshard") ? this.removeShards(item, amount) : super.removeInventoryAmount(level, player, item, requestItem, amount, purpose);
     }
 
-    public int removeInventoryAmount(Level level, PlayerMob player, InventoryItem item, Ingredient ingredient, int amount) {
+    public int removeInventoryAmount(Level level, PlayerMob player, final InventoryItem item, Inventory inventory, int inventorySlot, Ingredient ingredient, int amount, Collection<InventoryItemsRemoved> collect) {
         Item shard = ItemRegistry.getItem("enchantmentshard");
-        return ingredient.matchesItem(shard) ? this.removeShards(item, amount) : super.removeInventoryAmount(level, player, item, ingredient, amount);
+        return ingredient.matchesItem(shard) ? this.removeShards(item, amount) : super.removeInventoryAmount(level, player, item, inventory, inventorySlot, ingredient, amount, collect);
     }
 
     private int removeShards(InventoryItem item, int amount) {

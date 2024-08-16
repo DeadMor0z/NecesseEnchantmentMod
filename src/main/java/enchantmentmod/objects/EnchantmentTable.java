@@ -1,7 +1,7 @@
 package enchantmentmod.objects;
 
 import necesse.engine.localization.Localization;
-import necesse.engine.tickManager.TickManager;
+import necesse.engine.gameLoop.tickManager.TickManager;
 import necesse.entity.mobs.PlayerMob;
 import necesse.entity.objectEntity.DisplayStandObjectEntity;
 import necesse.entity.objectEntity.ObjectEntity;
@@ -34,7 +34,7 @@ public class EnchantmentTable extends FurnitureObject {
         this.mapColor = new Color(150, 119, 70);
         this.toolType = ToolType.ALL;
         this.objectHealth = 50;
-        this.drawDmg = false;
+        this.drawDamage = false;
         this.isLightTransparent = true;
     }
     public EnchantmentTable(int index) {
@@ -43,7 +43,7 @@ public class EnchantmentTable extends FurnitureObject {
         this.mapColor = new Color(150, 119, 70);
         this.toolType = ToolType.ALL;
         this.objectHealth = 50;
-        this.drawDmg = false;
+        this.drawDamage = false;
         this.isLightTransparent = true;
     }
 
